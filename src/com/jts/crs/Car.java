@@ -51,4 +51,8 @@ public class Car {
     public void setNoOfAvailableCar(int noOfAvailableCar) {
         this.noOfAvailableCar = noOfAvailableCar;
     }
+
+    public double calculatePrice(int days){
+        return pricePerDay * days;
+    }
 }
