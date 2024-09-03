@@ -151,7 +151,12 @@ public class CarRentalService {
                 Customer cust = bookedCarInfo.getCustomer();
                 returnCar(carToReturn, bookedCarInfo);
                 System.out.println("Car returned successfully by " + cust.getName());
-            }
+            } else if (choice == 3) {
+                System.out.println("== Available cards ==");
+                cars.stream()
+                        .filter(c -> c.getNoOfAvailableCar() > 0)
+                        .forEach(car -> System.out.println(car.getCarId() + " - " + car.getBrand() + " - " + car.getModel() + " = " + car.getNoOfAvailableCar()));
+            } 
             sc.close();
         }
     }
