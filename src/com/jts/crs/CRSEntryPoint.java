@@ -24,6 +24,11 @@ public class CRSEntryPoint {
         mercedesCar.setNoOfAvailableCar(2);
         mercedesCar.setPricePerDay(4000);
 
+        CarRentalService carRentalService = new CarRentalService();
+        carRentalService.addCar(toyotaCar);
+        carRentalService.addCar(bmwCar);
+        carRentalService.addCar(mercedesCar);
+
 
 
     }
