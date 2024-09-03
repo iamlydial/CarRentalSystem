@@ -10,10 +10,19 @@ public class CarRentalService {
     private List<Car> cars;
     private List<Customer> customers;
 
+    
+
     // Constructor to initialize the list of cars when a CarRentalService object is created
     public CarRentalService(){
         this.cars = new ArrayList<>();
         this.customers = new ArrayList<>();
+    }
+
+    public void bookedCar(Car car, Customer customer, int days){
+        if(car.getNoOfAvailableCar() >0){
+            car.setNoOfAvailableCar(car.getNoOfAvailableCar() -1);
+
+        }
     }
 
     // Method to add a Car object to the cars list
