@@ -9,25 +9,34 @@ public class CarRentalService {
     // A private list of Car objects, representing the inventory of cars available in the rental service
     private List<Car> cars;
     private List<Customer> customers;
+    private List <BookedCarInformation> bookedCarInformations;
 
-    
 
     // Constructor to initialize the list of cars when a CarRentalService object is created
     public CarRentalService(){
         this.cars = new ArrayList<>();
         this.customers = new ArrayList<>();
+        this.bookedCarInformations = new ArrayList<>();
     }
 
     public void bookedCar(Car car, Customer customer, int days){
         if(car.getNoOfAvailableCar() >0){
             car.setNoOfAvailableCar(car.getNoOfAvailableCar() -1);
+            bookedCarInformations.add(new BookedCarInformation(car, customer, days));
 
+        } else {
+            System.out.println("Car is not available for rent.");
         }
     }
 
     // Method to add a Car object to the cars list
     public  void addCar(Car car){
         cars.add(car);
+    }
+
+    public  void returnCar(Car car, BookedCarInformation bookedCarInformation){
+        car.setNoOfAvailableCar(car.getNoOfAvailableCar() +1);
+        bookedCarInformations.remove(bookedCarInformation);
     }
 
     // Method to add a Customer object to the customers list
@@ -104,6 +113,7 @@ public class CarRentalService {
 
                 if (confirmation.equalsIgnoreCase("Y")){
                     // booked a car
+                    bookedCar(selectedCar, customer, days);
                     System.out.println("Car booking successful.");
                 } else {
                     System.out.println("Car booking is canceled");
@@ -111,7 +121,36 @@ public class CarRentalService {
 
 
             } else if (choice == 2) {
-                System.out.println("Choice 2");
+                System.out.println("== Return a Car ==");
+                System.out.println("== Enter teh car ID you want to return  ==");
+                String carId = sc.nextLine();
+
+                Optional<Car> optionalCar = cars.stream()
+                        .filter(c -> c.getCarId().equals(carId))
+                        .findAny();
+
+                if(!optionalCar.isPresent()){
+                    System.out.println("Please provide a valid Car ID");
+                    options();
+                    return;
+                }
+
+                Car carToReturn = optionalCar.get();
+
+                BookedCarInformation bookedCarInfo = bookedCarInformations.stream()
+                        .filter(c-> c.getCar() == carToReturn)
+                        .findFirst()
+                        .orElse(null);
+
+                if(bookedCarInformations == null){
+                    System.out.println("Car information not available. Please provide valid details");
+                    options();
+                    return;
+                }
+
+                Customer cust = bookedCarInfo.getCustomer();
+                returnCar(carToReturn, bookedCarInfo);
+                System.out.println("Car returned successfully by " + cust.getName());
             }
             sc.close();
         }
