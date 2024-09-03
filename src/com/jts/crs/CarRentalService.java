@@ -155,9 +155,13 @@ public class CarRentalService {
                 System.out.println("== Available cards ==");
                 cars.stream()
                         .filter(c -> c.getNoOfAvailableCar() > 0)
-                        .forEach(car -> System.out.println(car.getCarId() + " - " + car.getBrand() + " - " + car.getModel() + " = " + car.getNoOfAvailableCar()));
-            } 
-            sc.close();
+                        .forEach(car -> System.out.println(car.getCarId() + " - " + car.getBrand() + " - " + car.getModel() + " available cars = " + car.getNoOfAvailableCar()));
+            }  else {
+                System.out.println("Thank you for choosing us.");
+                break;
+            }
+
         }
+        sc.close();
     }
 }
